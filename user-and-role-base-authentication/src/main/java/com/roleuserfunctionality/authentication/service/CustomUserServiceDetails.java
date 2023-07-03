@@ -12,7 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 @Service
 public class CustomUserServiceDetails implements UserDetailsService {
@@ -23,7 +25,13 @@ public class CustomUserServiceDetails implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users user = userRepository.findByUsername(username);
-        if (user != null) {
+        List<Users> userList = new ArrayList<>();
+        userList.add(user);
+
+        for (Users userDetails : userList) {
+            System.out.println(userDetails);
+        }
+        if (user == null) {
             throw new UsernameNotFoundException("User Not Found!!");
         }
         return new CustomUserDetails(user);

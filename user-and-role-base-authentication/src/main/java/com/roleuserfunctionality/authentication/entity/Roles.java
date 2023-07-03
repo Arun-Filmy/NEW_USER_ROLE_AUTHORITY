@@ -1,10 +1,7 @@
 package com.roleuserfunctionality.authentication.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,6 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "role")
 public class Roles {
     @Id
@@ -21,8 +19,8 @@ public class Roles {
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<Users> users = new HashSet<>();
+    @ManyToMany(mappedBy = "roles",fetch = FetchType.EAGER)
+    private Set<Users> users ;
 
     public Collection<Object> getPrivileges() {
         return null;
