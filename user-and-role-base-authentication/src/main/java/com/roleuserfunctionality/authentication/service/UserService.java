@@ -8,7 +8,10 @@ import com.roleuserfunctionality.authentication.repo.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService {
 
@@ -50,4 +53,16 @@ public class UserService {
         return user;
     }
 
+    public List<UserDto> getAllUsers() {
+        List<Users> users = userRepository.findAll();
+        return users.stream()
+                .map(UserDto::fromEntity)
+                .collect(Collectors.toList());
+
+    }
+
+    public Roles getRoleByIdWithUserDetails(Roles roles){
+        Roles roleByName = roleService.findRoleByName(roles.getName());
+        return roleByName;
+    }
 }
